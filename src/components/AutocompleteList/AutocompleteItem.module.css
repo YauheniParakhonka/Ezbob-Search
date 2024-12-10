@@ -1,0 +1,20 @@
+.item {
+    padding: 12px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.history {
+    color: purple;
+}
+
+.item:hover {
+    background: #f0f0f0;
+}
+.removeButton {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: gray;
+}

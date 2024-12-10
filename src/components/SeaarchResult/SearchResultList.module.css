@@ -1,0 +1,34 @@
+.container {
+    padding: 0;
+}
+
+.divider {
+    margin-top: 40px;
+}
+
+.list {
+    list-style: none;
+    padding: 24px 0 0;
+    overflow: auto;
+}
+
+.speed {
+    font-size: 0.8rem;
+    color: #acacac;
+}
+
+.pagination {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+}
+
+.pagination_item {
+    cursor: pointer;
+    color: blue;
+}
+
+.pagination_item_active {
+    color: purple;
+    font-weight: bold;
+}
