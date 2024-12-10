@@ -1,9 +1,10 @@
-import {ChangeEvent, KeyboardEventHandler, useRef, useState} from "react";
-import {localDB, SearchItem} from "../../data/localDB";
-import {AutocompleteList} from "../AutocompleteList/AutocompleteList";
-import styles from "./Search.module.css"
-import {clsx} from "clsx";
-import {getDatabasesResponse} from "../../data/service";
+import { ChangeEvent, useRef, useState } from 'react';
+import { AutocompleteList } from '../AutocompleteList/AutocompleteList';
+import { clsx } from 'clsx';
+import { getDatabasesResponse } from '../../data/service';
+import { SearchItem } from '../../data/types';
+
+import styles from './Search.module.css';
 
 interface SearchInputProps {
     setSearchValue: React.Dispatch<React.SetStateAction<string | null>>;
@@ -11,15 +12,15 @@ interface SearchInputProps {
     setSearchHistory: React.Dispatch<React.SetStateAction<SearchItem[]>>;
 }
 
-export const SearchInput: React.FC<SearchInputProps> = ({
-                                                            setSearchValue,
-                                                            searchHistory,
-                                                            setSearchHistory,
-                                                        }) => {
+export const SearchInput = ({
+    setSearchValue,
+    searchHistory,
+    setSearchHistory,
+}: SearchInputProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [query, setQuery] = useState<string>("");
+    const [query, setQuery] = useState<string>('');
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const autocompleteItems = getDatabasesResponse({ searchQuery: query })
+    const autocompleteItems = getDatabasesResponse({ searchQuery: query });
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -29,18 +30,20 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     const handleSelect = (item: SearchItem) => {
         setQuery(item.title);
         setSearchHistory((prev) => [...prev, item]);
-        setSearchValue(item.title)
+        setSearchValue(item.title);
     };
 
     const handleEnterClicked = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
             setSearchValue(e.currentTarget.value || null);
             inputRef.current?.blur();
         }
-    }
+    };
 
     const handleUnselect = (item: SearchItem) => {
-        setSearchHistory((prev) => prev.filter(value => value.id !== item.id));
+        setSearchHistory((prev) =>
+            prev.filter((value) => value.id !== item.id)
+        );
     };
 
     const handleBlur = () => {
@@ -61,7 +64,9 @@ export const SearchInput: React.FC<SearchInputProps> = ({
                 onBlur={handleBlur}
                 placeholder="Search..."
                 autoFocus
-                className={clsx(styles.input, {[styles.inputOpened]: isAutocompleteMenuOpened})}
+                className={clsx(styles.input, {
+                    [styles.inputOpened]: isAutocompleteMenuOpened,
+                })}
             />
             {isAutocompleteMenuOpened && (
                 <AutocompleteList
@@ -73,4 +78,4 @@ export const SearchInput: React.FC<SearchInputProps> = ({
             )}
         </div>
     );
-}
+};

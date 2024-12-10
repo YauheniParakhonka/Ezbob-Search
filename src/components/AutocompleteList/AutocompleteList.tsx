@@ -1,7 +1,7 @@
-import {SearchItem} from "../../data/localDB";
-import {AutocompleteItem} from "./AutocompleteItem";
-import styles from './AutocompleteList.module.css'
-import {clsx} from "clsx";
+import { AutocompleteItem } from './AutocompleteItem';
+import styles from './AutocompleteList.module.css';
+import { clsx } from 'clsx';
+import { SearchItem } from '../../data/types';
 
 interface AutocompleteListProps {
     items: SearchItem[];
@@ -10,14 +10,12 @@ interface AutocompleteListProps {
     searchHistory: SearchItem[];
 }
 
-export const AutocompleteList: React.FC<AutocompleteListProps> = ({
-                                                                      items,
-                                                                      onSelect,
-                                                                      searchHistory,
-                                                                      onUnselect,
-                                                                  }) => {
-
-
+export const AutocompleteList = ({
+    items,
+    onSelect,
+    searchHistory,
+    onUnselect,
+}: AutocompleteListProps) => {
     // We use onMouseDown insteadof onClick cause otherwise we close autocomplete menu (lose focus on input) early than onClick start work
     return (
         <ul className={clsx(styles.autocompleteList)}>
@@ -25,7 +23,9 @@ export const AutocompleteList: React.FC<AutocompleteListProps> = ({
                 <AutocompleteItem
                     key={item.id}
                     item={item}
-                    isSelectedItem={searchHistory.some((history) => history.id === item.id)}
+                    isSelectedItem={searchHistory.some(
+                        (history) => history.id === item.id
+                    )}
                     onSelect={onSelect}
                     onUnselect={onUnselect}
                 />
